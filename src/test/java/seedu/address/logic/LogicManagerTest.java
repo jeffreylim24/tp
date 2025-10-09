@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_APPLE;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalCompanies.AMY;
+import static seedu.address.testutil.TypicalCompanies.APPLE;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -167,7 +167,7 @@ public class LogicManagerTest {
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_APPLE + PHONE_DESC_APPLE
                 + EMAIL_DESC_APPLE + ADDRESS_DESC_APPLE;
-        Company expectedCompany = new CompanyBuilder(AMY).withTags().build();
+        Company expectedCompany = new CompanyBuilder(APPLE).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addCompany(expectedCompany);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

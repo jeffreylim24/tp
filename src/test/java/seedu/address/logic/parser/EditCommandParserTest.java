@@ -13,15 +13,15 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOEING;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_APPLICATION;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -97,12 +97,19 @@ public class EditCommandParserTest {
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Company} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_PENDING_INTERVIEW + TAG_DESC_PENDING_APPLICATION + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_PENDING_INTERVIEW + TAG_EMPTY + TAG_DESC_PENDING_APPLICATION, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_PENDING_INTERVIEW + TAG_DESC_PENDING_APPLICATION, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                "1" + TAG_DESC_PENDING_INTERVIEW + TAG_DESC_PENDING_APPLICATION + TAG_EMPTY,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                "1" + TAG_DESC_PENDING_INTERVIEW + TAG_EMPTY + TAG_DESC_PENDING_APPLICATION,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                "1" + TAG_EMPTY + TAG_DESC_PENDING_INTERVIEW + TAG_DESC_PENDING_APPLICATION,
+                Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_APPLE + VALID_PHONE_APPLE,
+        assertParseFailure(parser,
+                "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_APPLE + VALID_PHONE_APPLE,
                 Name.MESSAGE_CONSTRAINTS);
     }
 
@@ -184,8 +191,9 @@ public class EditCommandParserTest {
 
         // mulltiple valid fields repeated
         userInput = targetIndex.getOneBased() + PHONE_DESC_APPLE + ADDRESS_DESC_APPLE + EMAIL_DESC_APPLE
-                + TAG_DESC_PENDING_INTERVIEW + PHONE_DESC_APPLE + ADDRESS_DESC_APPLE + EMAIL_DESC_APPLE + TAG_DESC_PENDING_INTERVIEW
-                + PHONE_DESC_BOEING + ADDRESS_DESC_BOEING + EMAIL_DESC_BOEING + TAG_DESC_PENDING_APPLICATION;
+                + TAG_DESC_PENDING_INTERVIEW + PHONE_DESC_APPLE + ADDRESS_DESC_APPLE + EMAIL_DESC_APPLE
+                + TAG_DESC_PENDING_INTERVIEW + PHONE_DESC_BOEING + ADDRESS_DESC_BOEING + EMAIL_DESC_BOEING
+                + TAG_DESC_PENDING_APPLICATION;
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
@@ -217,7 +225,8 @@ public class EditCommandParserTest {
     public void parse_batchEditTwoIndices_success() {
         String userInput = "1,2" + TAG_DESC_PENDING_INTERVIEW;
         List<Index> indices = Arrays.asList(INDEX_FIRST_COMPANY, INDEX_SECOND_COMPANY);
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
+        EditCompanyDescriptor descriptor =
+                new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
         EditCommand expectedCommand = new EditCommand(indices, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -238,7 +247,8 @@ public class EditCommandParserTest {
     public void parse_batchEditWithSpaces_success() {
         String userInput = " 1 , 2 , 3 " + TAG_DESC_PENDING_INTERVIEW;
         List<Index> indices = Arrays.asList(INDEX_FIRST_COMPANY, INDEX_SECOND_COMPANY, INDEX_THIRD_COMPANY);
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
+        EditCompanyDescriptor descriptor =
+                new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
         EditCommand expectedCommand = new EditCommand(indices, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -247,7 +257,8 @@ public class EditCommandParserTest {
     @Test
     public void parse_batchEditSingleIndexInList_success() {
         String userInput = "2" + TAG_DESC_PENDING_INTERVIEW;
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
+        EditCompanyDescriptor descriptor =
+                new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
         EditCommand expectedCommand = new EditCommand(INDEX_SECOND_COMPANY, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -309,8 +320,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_batchEditLargeIndices_success() {
         String userInput = "999,1000" + TAG_DESC_PENDING_INTERVIEW;
-        List<Index> indices = Arrays.asList(Index.fromOneBased(999), Index.fromOneBased(1000));
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
+        List<Index> indices =
+                Arrays.asList(Index.fromOneBased(999), Index.fromOneBased(1000));
+        EditCompanyDescriptor descriptor =
+                new EditCompanyDescriptorBuilder().withTags(VALID_TAG_PENDING_INTERVIEW).build();
         EditCommand expectedCommand = new EditCommand(indices, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,36 +23,38 @@ import seedu.address.model.company.Company;
  */
 public class TypicalCompanies {
 
-    public static final Company ALICE = new CompanyBuilder().withName("Alpha Industries")
+    public static final Company ALPHA = new CompanyBuilder().withName("Alpha Industries")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("contact@alpha.com")
             .withPhone("94351253")
             .withTags("supplier").build();
-    public static final Company BENSON = new CompanyBuilder().withName("Beta Corporation")
+    public static final Company BETA = new CompanyBuilder().withName("Beta Corporation")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("info@beta.com").withPhone("98765432")
             .withTags("client", "partner").build();
-    public static final Company CARL = new CompanyBuilder().withName("Consolidated Traders").withPhone("95352563")
+    public static final Company CONS = new CompanyBuilder().withName("Consolidated Traders").withPhone("95352563")
             .withEmail("sales@consolidated.com").withAddress("1 Wall Street Plaza").build();
-    public static final Company DANIEL = new CompanyBuilder().withName("Delta Enterprises").withPhone("87652533")
+    public static final Company DELTA = new CompanyBuilder().withName("Delta Enterprises").withPhone("87652533")
             .withEmail("contact@delta.com").withAddress("10 Enterprise Road").withTags("supplier").build();
-    public static final Company ELLE = new CompanyBuilder().withName("Elite Manufacturing").withPhone("9482224")
+    public static final Company ELITE = new CompanyBuilder().withName("Elite Manufacturing").withPhone("9482224")
             .withEmail("enquiry@elite.com").withAddress("50 Michigan Avenue").build();
-    public static final Company FIONA = new CompanyBuilder().withName("Fusion Systems").withPhone("9482427")
+    public static final Company FUSION = new CompanyBuilder().withName("Fusion Systems").withPhone("9482427")
             .withEmail("hello@fusion.com").withAddress("88 Little Tokyo Street").build();
-    public static final Company GEORGE = new CompanyBuilder().withName("Global Trading Co").withPhone("9482442")
+    public static final Company GLOBAL = new CompanyBuilder().withName("Global Trading Co").withPhone("9482442")
             .withEmail("info@globaltrading.com").withAddress("4 Commerce Street").build();
 
     // Manually added
-    public static final Company HOON = new CompanyBuilder().withName("Horizon Logistics").withPhone("8482424")
+    public static final Company HOON = new CompanyBuilder().withName("Hoon Logistics").withPhone("8482424")
             .withEmail("contact@horizon.com").withAddress("15 Little India Road").build();
-    public static final Company IDA = new CompanyBuilder().withName("Innovative Solutions").withPhone("8482131")
+    public static final Company IDA = new CompanyBuilder().withName("Ida Solutions").withPhone("8482131")
             .withEmail("info@innovative.com").withAddress("72 Chicago Avenue").build();
 
     // Manually added - Company's details found in {@code CommandTestUtil}
-    public static final Company AMY = new CompanyBuilder().withName(VALID_NAME_APPLE).withPhone(VALID_PHONE_APPLE)
-            .withEmail(VALID_EMAIL_APPLE).withAddress(VALID_ADDRESS_APPLE).withTags(VALID_TAG_PENDING_INTERVIEW).build();
-    public static final Company BOB = new CompanyBuilder().withName(VALID_NAME_BOEING).withPhone(VALID_PHONE_BOEING)
-            .withEmail(VALID_EMAIL_BOEING).withAddress(VALID_ADDRESS_BOEING).withTags(VALID_TAG_PENDING_APPLICATION, VALID_TAG_PENDING_INTERVIEW)
+    public static final Company APPLE = new CompanyBuilder().withName(VALID_NAME_APPLE).withPhone(VALID_PHONE_APPLE)
+            .withEmail(VALID_EMAIL_APPLE).withAddress(VALID_ADDRESS_APPLE).withTags(VALID_TAG_PENDING_INTERVIEW)
+            .build();
+    public static final Company BOEING = new CompanyBuilder().withName(VALID_NAME_BOEING).withPhone(VALID_PHONE_BOEING)
+            .withEmail(VALID_EMAIL_BOEING).withAddress(VALID_ADDRESS_BOEING)
+            .withTags(VALID_TAG_PENDING_APPLICATION, VALID_TAG_PENDING_INTERVIEW)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Corporation"; // A keyword that matches Corporation
@@ -64,13 +66,13 @@ public class TypicalCompanies {
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
-        for (Company company : getTypicalcompanies()) {
+        for (Company company : getTypicalCompanies()) {
             ab.addCompany(company);
         }
         return ab;
     }
 
-    public static List<Company> getTypicalcompanies() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    public static List<Company> getTypicalCompanies() {
+        return new ArrayList<>(Arrays.asList(ALPHA, BETA, CONS, DELTA, ELITE, FUSION, GLOBAL));
     }
 }

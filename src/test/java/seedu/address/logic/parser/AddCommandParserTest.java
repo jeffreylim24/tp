@@ -16,22 +16,22 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_APPLICATION;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_INTERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalCompanies.AMY;
-import static seedu.address.testutil.TypicalCompanies.BOB;
+import static seedu.address.testutil.TypicalCompanies.APPLE;
+import static seedu.address.testutil.TypicalCompanies.BOEING;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,18 +50,21 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Company expectedCompany = new CompanyBuilder(BOB).withTags(VALID_TAG_PENDING_INTERVIEW).build();
+        Company expectedCompany = new CompanyBuilder(BOEING).withTags(VALID_TAG_PENDING_INTERVIEW).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING
+        assertParseSuccess(parser,
+                PREAMBLE_WHITESPACE + NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING
                 + ADDRESS_DESC_BOEING + TAG_DESC_PENDING_INTERVIEW, new AddCommand(expectedCompany));
 
 
         // multiple tags - all accepted
-        Company expectedCompanyMultipleTags = new CompanyBuilder(BOB).withTags(VALID_TAG_PENDING_INTERVIEW, VALID_TAG_PENDING_APPLICATION)
+        Company expectedCompanyMultipleTags =
+                new CompanyBuilder(BOEING).withTags(VALID_TAG_PENDING_INTERVIEW, VALID_TAG_PENDING_APPLICATION)
                 .build();
         assertParseSuccess(parser,
-                NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
+                        + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW,
                 new AddCommand(expectedCompanyMultipleTags));
     }
 
@@ -88,8 +91,8 @@ public class AddCommandParserTest {
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedcompaniestring + PHONE_DESC_APPLE + EMAIL_DESC_APPLE + NAME_DESC_APPLE + ADDRESS_DESC_APPLE
-                        + validExpectedcompaniestring,
+                validExpectedcompaniestring + PHONE_DESC_APPLE + EMAIL_DESC_APPLE + NAME_DESC_APPLE
+                        + ADDRESS_DESC_APPLE + validExpectedcompaniestring,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_PHONE));
 
         // invalid value followed by valid value
@@ -132,7 +135,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Company expectedCompany = new CompanyBuilder(AMY).withTags().build();
+        Company expectedCompany = new CompanyBuilder(APPLE).withTags().build();
         assertParseSuccess(parser, NAME_DESC_APPLE + PHONE_DESC_APPLE + EMAIL_DESC_APPLE + ADDRESS_DESC_APPLE,
                 new AddCommand(expectedCompany));
     }
@@ -142,54 +145,66 @@ public class AddCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING,
+        assertParseFailure(parser,
+                VALID_NAME_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING,
                 expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOEING + VALID_PHONE_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING,
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + VALID_PHONE_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING,
                 expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOEING + PHONE_DESC_BOEING + VALID_EMAIL_BOEING + ADDRESS_DESC_BOEING,
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + VALID_EMAIL_BOEING + ADDRESS_DESC_BOEING,
                 expectedMessage);
 
         // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + VALID_ADDRESS_BOEING,
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + VALID_ADDRESS_BOEING,
                 expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOEING + VALID_PHONE_BOEING + VALID_EMAIL_BOEING + VALID_ADDRESS_BOEING,
+        assertParseFailure(parser,
+                VALID_NAME_BOEING + VALID_PHONE_BOEING + VALID_EMAIL_BOEING + VALID_ADDRESS_BOEING,
                 expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
+        assertParseFailure(parser,
+                INVALID_NAME_DESC + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
                 + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW, Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
-        assertParseFailure(parser, NAME_DESC_BOEING + INVALID_PHONE_DESC + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + INVALID_PHONE_DESC + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
                 + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW, Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, NAME_DESC_BOEING + PHONE_DESC_BOEING + INVALID_EMAIL_DESC + ADDRESS_DESC_BOEING
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + INVALID_EMAIL_DESC + ADDRESS_DESC_BOEING
                 + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW, Email.MESSAGE_CONSTRAINTS);
 
         // invalid address
-        assertParseFailure(parser, NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + INVALID_ADDRESS_DESC
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + INVALID_ADDRESS_DESC
                 + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW, Address.MESSAGE_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
+        assertParseFailure(parser,
+                NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + ADDRESS_DESC_BOEING
                 + INVALID_TAG_DESC + VALID_TAG_PENDING_INTERVIEW, Tag.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + INVALID_ADDRESS_DESC,
+        assertParseFailure(parser,
+                INVALID_NAME_DESC + PHONE_DESC_BOEING + EMAIL_DESC_BOEING + INVALID_ADDRESS_DESC,
                 Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING
+        assertParseFailure(parser,
+                PREAMBLE_NON_EMPTY + NAME_DESC_BOEING + PHONE_DESC_BOEING + EMAIL_DESC_BOEING
                 + ADDRESS_DESC_BOEING + TAG_DESC_PENDING_APPLICATION + TAG_DESC_PENDING_INTERVIEW,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }

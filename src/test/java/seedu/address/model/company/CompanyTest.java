@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalCompanies.ALICE;
-import static seedu.address.testutil.TypicalCompanies.BOB;
+import static seedu.address.testutil.TypicalCompanies.ALPHA;
+import static seedu.address.testutil.TypicalCompanies.BOEING;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,73 +27,73 @@ public class CompanyTest {
     @Test
     public void isSameCompany() {
         // same object -> returns true
-        assertTrue(ALICE.isSameCompany(ALICE));
+        assertTrue(ALPHA.isSameCompany(ALPHA));
 
         // null -> returns false
-        assertFalse(ALICE.isSameCompany(null));
+        assertFalse(ALPHA.isSameCompany(null));
 
         // same name, all other attributes different -> returns true
-        Company editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOEING).withEmail(VALID_EMAIL_BOEING)
+        Company editedAlice = new CompanyBuilder(ALPHA).withPhone(VALID_PHONE_BOEING).withEmail(VALID_EMAIL_BOEING)
                 .withAddress(VALID_ADDRESS_BOEING).withTags(VALID_TAG_PENDING_APPLICATION).build();
-        assertTrue(ALICE.isSameCompany(editedAlice));
+        assertTrue(ALPHA.isSameCompany(editedAlice));
 
         // different name, all other attributes same -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOEING).build();
-        assertFalse(ALICE.isSameCompany(editedAlice));
+        editedAlice = new CompanyBuilder(ALPHA).withName(VALID_NAME_BOEING).build();
+        assertFalse(ALPHA.isSameCompany(editedAlice));
 
         // name differs in case, all other attributes same -> returns false
-        Company editedBob = new CompanyBuilder(BOB).withName(VALID_NAME_BOEING.toLowerCase()).build();
-        assertFalse(BOB.isSameCompany(editedBob));
+        Company editedBob = new CompanyBuilder(BOEING).withName(VALID_NAME_BOEING.toLowerCase()).build();
+        assertFalse(BOEING.isSameCompany(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOEING + " ";
-        editedBob = new CompanyBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        assertFalse(BOB.isSameCompany(editedBob));
+        editedBob = new CompanyBuilder(BOEING).withName(nameWithTrailingSpaces).build();
+        assertFalse(BOEING.isSameCompany(editedBob));
     }
 
     @Test
     public void equals() {
         // same values -> returns true
-        Company aliceCopy = new CompanyBuilder(ALICE).build();
-        assertTrue(ALICE.equals(aliceCopy));
+        Company aliceCopy = new CompanyBuilder(ALPHA).build();
+        assertTrue(ALPHA.equals(aliceCopy));
 
         // same object -> returns true
-        assertTrue(ALICE.equals(ALICE));
+        assertTrue(ALPHA.equals(ALPHA));
 
         // null -> returns false
-        assertFalse(ALICE.equals(null));
+        assertFalse(ALPHA.equals(null));
 
         // different type -> returns false
-        assertFalse(ALICE.equals(5));
+        assertFalse(ALPHA.equals(5));
 
         // different company -> returns false
-        assertFalse(ALICE.equals(BOB));
+        assertFalse(ALPHA.equals(BOEING));
 
         // different name -> returns false
-        Company editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOEING).build();
-        assertFalse(ALICE.equals(editedAlice));
+        Company editedAlice = new CompanyBuilder(ALPHA).withName(VALID_NAME_BOEING).build();
+        assertFalse(ALPHA.equals(editedAlice));
 
         // different phone -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOEING).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedAlice = new CompanyBuilder(ALPHA).withPhone(VALID_PHONE_BOEING).build();
+        assertFalse(ALPHA.equals(editedAlice));
 
         // different email -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withEmail(VALID_EMAIL_BOEING).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedAlice = new CompanyBuilder(ALPHA).withEmail(VALID_EMAIL_BOEING).build();
+        assertFalse(ALPHA.equals(editedAlice));
 
         // different address -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withAddress(VALID_ADDRESS_BOEING).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedAlice = new CompanyBuilder(ALPHA).withAddress(VALID_ADDRESS_BOEING).build();
+        assertFalse(ALPHA.equals(editedAlice));
 
         // different tags -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withTags(VALID_TAG_PENDING_APPLICATION).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedAlice = new CompanyBuilder(ALPHA).withTags(VALID_TAG_PENDING_APPLICATION).build();
+        assertFalse(ALPHA.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
-        String expected = Company.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
-        assertEquals(expected, ALICE.toString());
+        String expected = Company.class.getCanonicalName() + "{name=" + ALPHA.getName() + ", phone=" + ALPHA.getPhone()
+                + ", email=" + ALPHA.getEmail() + ", address=" + ALPHA.getAddress() + ", tags=" + ALPHA.getTags() + "}";
+        assertEquals(expected, ALPHA.toString());
     }
 }
