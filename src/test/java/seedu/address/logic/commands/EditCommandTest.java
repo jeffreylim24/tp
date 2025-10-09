@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_APPLE;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showCompanyAtIndex;
@@ -63,11 +63,11 @@ public class EditCommandTest {
         Company lastCompany = model.getFilteredCompanyList().get(indexLastCompany.getZeroBased());
 
         CompanyBuilder companyInList = new CompanyBuilder(lastCompany);
-        Company editedCompany = companyInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        Company editedCompany = companyInList.withName(VALID_NAME_BOEING).withPhone(VALID_PHONE_BOEING)
+                .withTags(VALID_TAG_PENDING_APPLICATION).build();
 
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOEING)
+                .withPhone(VALID_PHONE_BOEING).withTags(VALID_TAG_PENDING_APPLICATION).build();
         EditCommand editCommand = new EditCommand(indexLastCompany, descriptor);
 
         String expectedMessage =
@@ -97,9 +97,9 @@ public class EditCommandTest {
         showCompanyAtIndex(model, INDEX_FIRST_COMPANY);
 
         Company companyInFilteredList = model.getFilteredCompanyList().get(INDEX_FIRST_COMPANY.getZeroBased());
-        Company editedCompany = new CompanyBuilder(companyInFilteredList).withName(VALID_NAME_BOB).build();
+        Company editedCompany = new CompanyBuilder(companyInFilteredList).withName(VALID_NAME_BOEING).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_COMPANY,
-                new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOEING).build());
 
         String expectedMessage =
                 String.format(EditCommand.MESSAGE_EDIT_COMPANY_SUCCESS, Messages.format(editedCompany));
@@ -134,7 +134,7 @@ public class EditCommandTest {
     @Test
     public void execute_invalidCompanyIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCompanyList().size() + 1);
-        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCompanyDescriptor descriptor = new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOEING).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         String expectedMessage = String.format("Index out of bounds: %d. Valid range: 1 to %d.",
@@ -154,7 +154,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getCompanyList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
-                new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditCompanyDescriptorBuilder().withName(VALID_NAME_BOEING).build());
 
         String expectedMessage = String.format("Index out of bounds: %d. Valid range: 1 to %d.",
                 outOfBoundIndex.getOneBased(), model.getFilteredCompanyList().size());
@@ -163,10 +163,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_COMPANY, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_COMPANY, DESC_APPLE);
 
         // same values -> returns true
-        EditCompanyDescriptor copyDescriptor = new EditCompanyDescriptor(DESC_AMY);
+        EditCompanyDescriptor copyDescriptor = new EditCompanyDescriptor(DESC_APPLE);
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_COMPANY, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -180,10 +180,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_COMPANY, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_COMPANY, DESC_APPLE)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_COMPANY, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_COMPANY, DESC_BOEING)));
     }
 
     @Test
@@ -338,11 +338,11 @@ public class EditCommandTest {
     public void equals_batchEditCommand() {
         List<Index> indices1 = Arrays.asList(INDEX_FIRST_COMPANY, INDEX_SECOND_COMPANY);
         List<Index> indices2 = Arrays.asList(INDEX_FIRST_COMPANY, INDEX_THIRD_COMPANY);
-        final EditCommand batchCommand1 = new EditCommand(indices1, DESC_AMY);
-        final EditCommand batchCommand2 = new EditCommand(indices2, DESC_AMY);
+        final EditCommand batchCommand1 = new EditCommand(indices1, DESC_APPLE);
+        final EditCommand batchCommand2 = new EditCommand(indices2, DESC_APPLE);
 
         // same values -> returns true
-        EditCommand commandWithSameValues = new EditCommand(indices1, new EditCompanyDescriptor(DESC_AMY));
+        EditCommand commandWithSameValues = new EditCommand(indices1, new EditCompanyDescriptor(DESC_APPLE));
         assertTrue(batchCommand1.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -358,10 +358,10 @@ public class EditCommandTest {
         assertFalse(batchCommand1.equals(batchCommand2));
 
         // different descriptor -> returns false
-        assertFalse(batchCommand1.equals(new EditCommand(indices1, DESC_BOB)));
+        assertFalse(batchCommand1.equals(new EditCommand(indices1, DESC_BOEING)));
 
         // single edit vs batch edit -> returns false
-        EditCommand singleEditCommand = new EditCommand(INDEX_FIRST_COMPANY, DESC_AMY);
+        EditCommand singleEditCommand = new EditCommand(INDEX_FIRST_COMPANY, DESC_APPLE);
         assertFalse(batchCommand1.equals(singleEditCommand));
     }
 

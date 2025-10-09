@@ -3,11 +3,11 @@ package seedu.address.model.company;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOEING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_PENDING_APPLICATION;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalCompanies.ALICE;
 import static seedu.address.testutil.TypicalCompanies.BOB;
@@ -33,20 +33,20 @@ public class CompanyTest {
         assertFalse(ALICE.isSameCompany(null));
 
         // same name, all other attributes different -> returns true
-        Company editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        Company editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOEING).withEmail(VALID_EMAIL_BOEING)
+                .withAddress(VALID_ADDRESS_BOEING).withTags(VALID_TAG_PENDING_APPLICATION).build();
         assertTrue(ALICE.isSameCompany(editedAlice));
 
         // different name, all other attributes same -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOEING).build();
         assertFalse(ALICE.isSameCompany(editedAlice));
 
         // name differs in case, all other attributes same -> returns false
-        Company editedBob = new CompanyBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
+        Company editedBob = new CompanyBuilder(BOB).withName(VALID_NAME_BOEING.toLowerCase()).build();
         assertFalse(BOB.isSameCompany(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
-        String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
+        String nameWithTrailingSpaces = VALID_NAME_BOEING + " ";
         editedBob = new CompanyBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSameCompany(editedBob));
     }
@@ -70,23 +70,23 @@ public class CompanyTest {
         assertFalse(ALICE.equals(BOB));
 
         // different name -> returns false
-        Company editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        Company editedAlice = new CompanyBuilder(ALICE).withName(VALID_NAME_BOEING).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different phone -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
+        editedAlice = new CompanyBuilder(ALICE).withPhone(VALID_PHONE_BOEING).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different email -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
+        editedAlice = new CompanyBuilder(ALICE).withEmail(VALID_EMAIL_BOEING).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different address -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
+        editedAlice = new CompanyBuilder(ALICE).withAddress(VALID_ADDRESS_BOEING).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
-        editedAlice = new CompanyBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        editedAlice = new CompanyBuilder(ALICE).withTags(VALID_TAG_PENDING_APPLICATION).build();
         assertFalse(ALICE.equals(editedAlice));
     }
 

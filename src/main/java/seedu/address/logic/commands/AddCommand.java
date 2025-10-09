@@ -21,22 +21,21 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a company to the address book.\n"
-            + "Simple format: " + COMMAND_WORD + " " + PREFIX_NAME + "COMPANY_NAME\n"
-            + "Detailed format: " + COMMAND_WORD + " "
+            + "Simple format (ONLY NAME): " + COMMAND_WORD + " " + PREFIX_NAME + "COMPANY_NAME\n"
+            + "Detailed format (MUST INCLUDE ALL FIELDS): " + COMMAND_WORD + " "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_TAG + "TAG\n"
             + "Examples:\n"
             + "  " + COMMAND_WORD + " " + PREFIX_NAME + "Google Inc\n"
             + "  " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_NAME + "Example Trading PTE LTD "
+            + PREFIX_PHONE + "67676767 "
+            + PREFIX_EMAIL + "example@company.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owes-money";
+            + PREFIX_TAG + "pending-application";
 
     public static final String MESSAGE_SUCCESS = "New company added: %1$s";
     public static final String MESSAGE_DUPLICATE_COMPANY = "This company already exists in the address book";

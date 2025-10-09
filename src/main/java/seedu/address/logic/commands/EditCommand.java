@@ -50,7 +50,9 @@ public class EditCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com\n"
             + "For batch editing: " + COMMAND_WORD + " 1,2,3 "
-            + PREFIX_TAG + "applied";
+            + PREFIX_TAG + "applied"; /* Also works with other prefixes, just that for Name, it will accept the
+            input, and change the first index, but won't change the subsequent ones as Names must be unique across the
+            list of companies. */
 
     public static final String MESSAGE_EDIT_COMPANY_SUCCESS = "Edited Company: %1$s";
     public static final String MESSAGE_BATCH_EDIT_SUCCESS = "Edited %1$d companies successfully";
