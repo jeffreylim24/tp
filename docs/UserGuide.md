@@ -135,13 +135,18 @@ Shows a list of all companies in Cerebro.
 * Resets any active filters from previous `find` commands
 * Shows companies with their current index numbers
 
-### Filtering companies by status: `filter`
+### Filtering companies: `filter`
 
-Finds companies by status values. Case-insensitive, lists all companies that **matches** the status.
+Finds companies by status and/or tags. Case-insensitive, lists all companies that **matches** the status, and has at least one tag that contains one of the TAG_KEYWORDS.
 
-**Format:** `filter s/STATUS`
+**Format:** `filter [s/STATUS] [t/TAG_KEYWORD]...`
 
-**Result for `filter`:**
+**Examples:**
+
+* `filter s/ACCEPTED` → shows companies with `ACCEPTED` status.
+* `filter s/ACCEPTED t/sup t/part t/data` → shows companies with `ACCEPTED` status, and at least 1 tag that contains one of the 'sup', 'part' or 'data' keyword.
+
+**Result for `filter s/ACCEPTED t/sup t/part t/data`:**
 
 <img src="images/FilterAcceptedResult.png" alt="result for 'filter accepted" width="450"/>
 
